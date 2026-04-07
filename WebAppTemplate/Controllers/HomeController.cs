@@ -13,28 +13,18 @@ namespace WebAppTemplate.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Hours()
         {
-            ViewBag.Message = "The application description page.";
+            ViewBag.Message = "Hours";
 
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "My contact page.";
+            ViewBag.Message = "Contact";
 
             return View();
-        }
-
-        public ActionResult GitBasics()
-        {
-            return Content("Git Basics");
-        }
-
-        public ActionResult EndpointA()
-        {
-            return Content("This is endpoint A");
         }
     }
 }
