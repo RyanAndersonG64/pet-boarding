@@ -20,8 +20,8 @@
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Admin Home", "Index", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Manage Pets", "ManagePets", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Manage Bookings", "ManageBookings", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Manage Pets", "ManagePets", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Manage Bookings", "ManageBookings", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
                  @Html.Partial("_LoginPartial")
             </div>

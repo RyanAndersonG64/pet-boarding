@@ -12,5 +12,15 @@ namespace WebAppTemplate.Controllers
         {
             return View();
         }
+
+        public ActionResult ManagePets()
+        {
+            return View();
+        }
+
+        public ActionResult ManageBookings()
+        {
+            return View();
+        }
     }
 }
