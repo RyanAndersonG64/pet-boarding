@@ -19,10 +19,10 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("User Layout", "Index", "User", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Admin Layout", "Index", "Admin", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Hours", "Hours", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("My Account", "Index", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Manage Pets", "ManagePets", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Manage Bookings", "ManageBookings", "User", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Contact Us", "ContactUs", "User", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
                  @Html.Partial("_LoginPartial")
             </div>
