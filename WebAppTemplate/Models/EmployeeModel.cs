@@ -13,5 +13,9 @@ namespace WebAppTemplate.Models
         [MaxLength(50)]
         public string Name { get; set; }
         public bool AdminStatus { get; set; } = false;
+        public EmployeeModel ()
+        {
+            EmployeeId = Guid.NewGuid();
+        }
     }
 }

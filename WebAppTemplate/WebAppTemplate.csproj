@@ -210,6 +210,14 @@
     <Compile Include="Migrations\202604301945321_PetBookingModel.Designer.cs">
       <DependentUpon>202604301945321_PetBookingModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202605041842246_Add NewGuid method to models.cs" />
+    <Compile Include="Migrations\202605041842246_Add NewGuid method to models.Designer.cs">
+      <DependentUpon>202605041842246_Add NewGuid method to models.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202605061849552_Make %27actual%27 dates nullable.cs" />
+    <Compile Include="Migrations\202605061849552_Make %27actual%27 dates nullable.Designer.cs">
+      <DependentUpon>202605061849552_Make %27actual%27 dates nullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AnimalTypeModel.cs" />
     <Compile Include="Models\BookingModel.cs" />
@@ -368,6 +376,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202604301945321_PetBookingModel.resx">
       <DependentUpon>202604301945321_PetBookingModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202605041842246_Add NewGuid method to models.resx">
+      <DependentUpon>202605041842246_Add NewGuid method to models.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202605061849552_Make %27actual%27 dates nullable.resx">
+      <DependentUpon>202605061849552_Make %27actual%27 dates nullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

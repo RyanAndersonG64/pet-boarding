@@ -14,5 +14,9 @@ namespace WebAppTemplate.Models
         public PetModel Pet { get; set; }
         [Required]
         public BookingModel Booking { get; set; }
+        public PetBookingModel()
+        {
+            PetBookingId = Guid.NewGuid();
+        }
     }
 }

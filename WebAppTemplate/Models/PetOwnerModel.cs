@@ -15,5 +15,9 @@ namespace WebAppTemplate.Models
         public UserModel User { get; set; }
         [Required]
         public PetModel Pet { get; set; }
+        public PetOwnerModel()
+        {
+            PetOwnerId = Guid.NewGuid();
+        }
     }
 }

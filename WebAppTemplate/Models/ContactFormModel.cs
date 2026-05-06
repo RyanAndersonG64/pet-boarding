@@ -15,6 +15,10 @@ namespace WebAppTemplate.Models
         public string Subject { get; set; } = string.Empty;
         public string Body { get; set; }
         public bool Responded { get; set; } = false;
+        public ContactFormModel()
+        {
+            ContactFormId = Guid.NewGuid();
+        }
 
     }
 }

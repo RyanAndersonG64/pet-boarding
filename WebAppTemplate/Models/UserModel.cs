@@ -18,5 +18,9 @@ namespace WebAppTemplate.Models
         [MinLength(6)]
         public string Password { get; set; } = string.Empty;
         public List<PetOwnerModel> Pets { get; set; }
+        public UserModel ()
+        {
+            UserId = Guid.NewGuid();
+        }
     }
 }

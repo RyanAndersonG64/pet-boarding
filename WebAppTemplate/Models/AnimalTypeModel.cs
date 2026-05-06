@@ -10,8 +10,12 @@ namespace WebAppTemplate.Models
     {
         [Key]
         public Guid AnimalTypeId { get; set; }
-        public string type { get; set; }
+        public string Type { get; set; }
         public decimal Price { get; set; } = 0;
         public List<PetModel> Pets { get; set; }
+        public AnimalTypeModel()
+        {
+            AnimalTypeId = Guid.NewGuid();
+        }
     }
 }

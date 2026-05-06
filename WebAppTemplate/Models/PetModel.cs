@@ -21,5 +21,9 @@ namespace WebAppTemplate.Models
         [Required]
         public EmergencyContactModel EmergencyContact { get; set; }
         public List<PetOwnerModel> Owners { get; set; }
+        public PetModel ()
+        {
+            PetId = Guid.NewGuid();
+        }
     }
 }

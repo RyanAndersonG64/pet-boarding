@@ -15,5 +15,9 @@ namespace WebAppTemplate.Models
         [MaxLength(15)]
         public string PhoneNumber { get; set; } = string.Empty;
         public List <PetModel> Pets { get; set; }
+        public EmergencyContactModel()
+        {
+            EmergencyContactId = Guid.NewGuid();
+        }
     }
 }
