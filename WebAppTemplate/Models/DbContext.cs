@@ -10,7 +10,7 @@ namespace WebAppTemplate.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<UserModel> Users { get; set; }
+        //public DbSet<UserModel> Users { get; set; }
         public DbSet<PetModel> Pets { get; set; }
         public DbSet<AnimalTypeModel> AnimalTypes { get; set; }
         public DbSet<EmergencyContactModel> EmergencyContacts { get; set; }
