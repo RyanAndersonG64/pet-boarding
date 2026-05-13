@@ -1,3 +1,5 @@
+@model WebAppTemplate.ViewModels.ContactFormVM
+
 @{
     ViewBag.Title = "Contact Us";
     Layout = "~/Views/User/_UserLayout.cshtml";
@@ -6,5 +8,7 @@
     <h2 id="title">@ViewBag.Title</h2>
     <h3>@ViewBag.Message</h3>
 
-    <p>Manage Contact Forms as User</p>
+    <h4>@Model.ContactForm.Subject</h4>
+    <h6>Responded: @Model.ContactForm.Responded</h6>
+    <p>@Model.ContactForm.Body</p>
 </main>

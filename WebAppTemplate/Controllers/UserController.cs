@@ -6,14 +6,43 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebAppTemplate.Models;
+using WebAppTemplate.ViewModels;
 
 namespace WebAppTemplate.Controllers
 {
     public class UserController : Controller
     {
+
+
+
+        //---------------------
+        //  Routes and Views
+        //---------------------
+
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult ContactUs()
+        {
+            ViewBag.Message = "Submit a Contact Form";
+
+            ContactFormVM model = new ContactFormVM();
+
+            //model.ContactForm = new Models.ApplicationDbContext().ContactForms.FirstOrDefault(cf => cf.User.UserName == User.Identity.Name);
+            model.ContactForm = new Models.ApplicationDbContext().ContactForms.FirstOrDefault();
+            // If the user has not submitted a contact form, initialize an empty one
+            if (model.ContactForm == null)
+            {
+                model.ContactForm = new ContactFormModel()
+                {
+                    Subject = "Insert Test Subject Here",
+                    Body = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                };
+            }
+
+            return View(model);
         }
 
         public ActionResult ManagePets()
@@ -21,23 +50,24 @@ namespace WebAppTemplate.Controllers
             return View();
         }
 
+
         public ActionResult ManageBookings()
         {
             return View();
         }
 
-        public ActionResult ContactUs()
-        {
-            return View();
-        }
+        //---------------------
+        //      CRUD
+        //---------------------
 
         // Creation logic
         public ActionResult AddPetOwner(PetModel pet)
         {
-            ApplicationDbContext context = new ApplicationDbContext();
+            Models.ApplicationDbContext context = new Models.ApplicationDbContext();
 
             PetOwnerModel newPetOwner = new PetOwnerModel();
-            newPetOwner.User = new ApplicationDbContext().Users.FirstOrDefault(u => u.Name == User.Identity.Name);
+            //newPetOwner.User = new Models.ApplicationDbContext().Users.FirstOrDefault(u => u.Name == User.Identity.Name);
+
             newPetOwner.Pet = pet;
 
             context.PetOwners.Add(newPetOwner);
@@ -55,16 +85,16 @@ namespace WebAppTemplate.Controllers
             return RedirectToAction("ManagePets");
         }
 
-        public ActionResult AddPetBooking (PetModel pet, BookingModel booking)
+        public ActionResult AddPetBooking(PetModel pet, BookingModel booking)
         {
-            ApplicationDbContext context = new ApplicationDbContext();
+            Models.ApplicationDbContext context = new Models.ApplicationDbContext();
 
             PetBookingModel newPetBooking = new PetBookingModel();
             newPetBooking.Pet = pet;
             newPetBooking.Booking = booking;
 
             context.PetBookings.Add(newPetBooking);
-            try 
+            try
             {
                 context.SaveChanges();
             }
@@ -80,7 +110,7 @@ namespace WebAppTemplate.Controllers
 
         public ActionResult AddEmergencyContact()
         {
-            ApplicationDbContext dbContext = new ApplicationDbContext();
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
             EmergencyContactModel newContact = new EmergencyContactModel();
             newContact.Name = Request.Form["Name"];
             newContact.PhoneNumber = Request.Form["PhoneNumber"];
@@ -101,7 +131,7 @@ namespace WebAppTemplate.Controllers
 
         public ActionResult AddPet()
         {
-            ApplicationDbContext dbContext = new ApplicationDbContext();
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
 
             PetModel newPet = new PetModel();
             newPet.Name = Request.Form["Name"];
@@ -117,7 +147,7 @@ namespace WebAppTemplate.Controllers
                 dbContext.SaveChanges();
             }
             catch (Exception ex)
-            {
+            { 
                 // Handle exceptions (e.g., log the error, show an error message, etc.)
                 // For simplicity, we will just return the error message in the view.
                 ViewBag.ErrorMessage = "An error occurred while adding the pet: " + ex.Message;
@@ -125,11 +155,12 @@ namespace WebAppTemplate.Controllers
             }
             AddPetOwner(newPet);
             return RedirectToAction("ManagePets");
-        }
+            }
 
-        public ActionResult AddBooking ()
-        {
-            ApplicationDbContext dbContext = new ApplicationDbContext();
+
+                public ActionResult AddBooking()
+            {
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
 
             PetModel pet = dbContext.Pets.FirstOrDefault(p => p.PetId == Guid.Parse(Request.Form["PetId"]));
 
@@ -140,7 +171,7 @@ namespace WebAppTemplate.Controllers
             }
 
             BookingModel newBooking = new BookingModel();
-            newBooking.User = dbContext.Users.FirstOrDefault(u => u.Name == User.Identity.Name);
+            //newBooking.User = dbContext.Users.FirstOrDefault(u => u.Name == User.Identity.Name);
             newBooking.ScheduledCheckIn = DateTime.Parse(Request.Form["ScheduledCheckIn"]);
             newBooking.ActualCheckIn = null;
             newBooking.CheckedInBy = null;
@@ -168,10 +199,11 @@ namespace WebAppTemplate.Controllers
 
         public ActionResult AddContactForm()
         {
-            ApplicationDbContext dbContext = new ApplicationDbContext();
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
 
             ContactFormModel newContactForm = new ContactFormModel();
-            newContactForm.User = dbContext.Users.FirstOrDefault(u => u.Name == User.Identity.Name);
+            newContactForm.User = null;
+            //newContactForm.User = dbContext.Users.FirstOrDefault(u => u.Name == User.Identity.Name);
             newContactForm.Subject = Request.Form["Subject"];
             newContactForm.Body = Request.Form["Body"];
             newContactForm.Responded = false;
@@ -194,19 +226,19 @@ namespace WebAppTemplate.Controllers
         // Read logic
         public ActionResult ViewPet(Guid id)
         {
-            ApplicationDbContext dbContext = new ApplicationDbContext();
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
             PetModel pet = dbContext.Pets.FirstOrDefault(p => p.PetId == id);
             if (pet == null)
             {
                 return HttpNotFound();
             }
-            return Content($"{ pet.Name} :/n Age - { pet.Age} /n Breed - { pet.Breed} /n Special Instructions - { pet.SpecialInstructions} /n Emergency Contact - { pet.EmergencyContact?.Name}");
+            return Content($"{pet.Name} :/n Age - {pet.Age} /n Breed - {pet.Breed} /n Special Instructions - {pet.SpecialInstructions} /n Emergency Contact - {pet.EmergencyContact?.Name}");
         }
 
         // Update logic
         public ActionResult UpdatePet(Guid id, PetModel updatedPet)
         {
-            ApplicationDbContext dbContext = new ApplicationDbContext();
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
             PetModel pet = dbContext.Pets.FirstOrDefault(p => p.PetId == id);
             if (pet == null)
             {
@@ -219,7 +251,7 @@ namespace WebAppTemplate.Controllers
             pet.SpecialInstructions = updatedPet.SpecialInstructions;
             pet.EmergencyContact = updatedPet.EmergencyContact;
 
-            try 
+            try
             {
                 dbContext.SaveChanges();
             }
@@ -242,7 +274,7 @@ namespace WebAppTemplate.Controllers
 
         public ActionResult DeletePetOwner(Guid id, PetModel pet)
         {
-            ApplicationDbContext dbContext = new ApplicationDbContext();
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
             PetOwnerModel petOwner = dbContext.PetOwners.FirstOrDefault(po => po.PetOwnerId == id);
             if (petOwner == null)
             {
@@ -265,7 +297,7 @@ namespace WebAppTemplate.Controllers
 
         public ActionResult DeletePetBooking(Guid id, PetModel pet)
         {
-            ApplicationDbContext dbContext = new ApplicationDbContext();
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
             PetBookingModel petBooking = dbContext.PetBookings.FirstOrDefault(pb => pb.PetBookingId == id);
             if (petBooking == null)
             {
@@ -288,7 +320,7 @@ namespace WebAppTemplate.Controllers
 
         public ActionResult DeletePet(Guid id)
         {
-            ApplicationDbContext dbContext = new ApplicationDbContext();
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
             PetModel pet = dbContext.Pets.FirstOrDefault(p => p.PetId == id);
             if (pet == null)
             {
@@ -324,9 +356,9 @@ namespace WebAppTemplate.Controllers
             return RedirectToAction("ManagePets");
         }
 
-        public ActionResult DeleteBooking(Guid id) 
-        { 
-            ApplicationDbContext dbContext = new ApplicationDbContext();
+        public ActionResult DeleteBooking(Guid id)
+        {
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
             BookingModel booking = dbContext.Bookings.FirstOrDefault(b => b.BookingId == id);
             if (booking == null)
             {
@@ -356,7 +388,7 @@ namespace WebAppTemplate.Controllers
 
         public ActionResult DeleteEmergencyContact(Guid id)
         {
-            ApplicationDbContext dbContext = new ApplicationDbContext();
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
             EmergencyContactModel emergencyContact = dbContext.EmergencyContacts.FirstOrDefault(ec => ec.EmergencyContactId == id);
             if (emergencyContact == null)
             {
@@ -394,7 +426,7 @@ namespace WebAppTemplate.Controllers
 
         public ActionResult DeleteContactForm(Guid id)
         {
-            ApplicationDbContext dbContext = new ApplicationDbContext();
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
             ContactFormModel contactForm = dbContext.ContactForms.FirstOrDefault(cf => cf.ContactFormId == id);
             if (contactForm == null)
             {

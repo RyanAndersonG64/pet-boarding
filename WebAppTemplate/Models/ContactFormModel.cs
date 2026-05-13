@@ -12,7 +12,7 @@ namespace WebAppTemplate.Models
         public Guid ContactFormId { get; set; }
         [Required]
         public UserModel User { get; set; }
-        public string Subject { get; set; } = string.Empty;
+        public string Subject { get; set; }
         public string Body { get; set; }
         public bool Responded { get; set; } = false;
         public ContactFormModel()
