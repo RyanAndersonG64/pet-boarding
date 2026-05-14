@@ -268,12 +268,6 @@
     <Content Include="Views\User\ManageBookings.cshtml" />
     <Content Include="Views\User\ManagePets.cshtml" />
     <Content Include="Views\User\_UserLayout.cshtml" />
-    <Content Include="Views\Admin\.vs\Admin.slnx\FileContentIndex\78f7eb41-eb60-4d5e-a1aa-d38f3d7935e1.vsidx" />
-    <Content Include="Views\Admin\.vs\Admin.slnx\v18\DocumentLayout.json" />
-    <Content Include="Views\Admin\.vs\Admin\CopilotIndices\18.4.114.215\CodeChunks.db" />
-    <Content Include="Views\Admin\.vs\Admin\CopilotIndices\18.4.114.215\SemanticSymbols.db" />
-    <Content Include="Views\Admin\.vs\slnx.sqlite" />
-    <Content Include="Views\Admin\.vs\VSWorkspaceState.json" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ManageBookings.cshtml" />
     <Content Include="Views\Admin\ManageContactForms.cshtml" />
@@ -282,7 +276,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin\.vs\Admin.slnx\copilot-chat\34080470\sessions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

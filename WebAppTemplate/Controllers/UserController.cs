@@ -160,11 +160,11 @@ namespace WebAppTemplate.Controllers
             }
             AddPetOwner(newPet);
             return RedirectToAction("ManagePets");
-            }
+        }
 
 
-                public ActionResult AddBooking()
-            {
+        public ActionResult AddBooking()
+        {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
 
             PetModel pet = dbContext.Pets.FirstOrDefault(p => p.PetId == Guid.Parse(Request.Form["PetId"]));
