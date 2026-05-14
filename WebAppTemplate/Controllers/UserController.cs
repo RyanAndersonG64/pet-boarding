@@ -175,14 +175,6 @@ namespace WebAppTemplate.Controllers
                 return View("ManageBookings");
             }
 
-            PetModel pet = dbContext.Pets.FirstOrDefault(p => p.PetId == Guid.Parse(Request.Form["PetId"]));
-
-            if (pet == null)
-            {
-                ViewBag.ErrorMessage = "The specified pet does not exist.";
-                return View("ManageBookings");
-            }
-
             BookingModel newBooking = new BookingModel();
             //newBooking.User = dbContext.Users.FirstOrDefault(u => u.Name == User.Identity.Name);
             newBooking.ScheduledCheckIn = DateTime.Parse(Request.Form["ScheduledCheckIn"]);
