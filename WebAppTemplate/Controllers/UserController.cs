@@ -26,25 +26,30 @@ namespace WebAppTemplate.Controllers
 
         public ActionResult ContactUs()
         {
-            ViewBag.Message = "Submit a Contact Form";
+            ViewBag.Message = "View and submit contact forms";
 
             ContactFormVM model = new ContactFormVM();
 
             //model.ContactForm = new Models.ApplicationDbContext().ContactForms.FirstOrDefault(cf => cf.User.UserName == User.Identity.Name);
             model.ContactForm = new Models.ApplicationDbContext().ContactForms.FirstOrDefault();
-            // If the user has not submitted a contact form, initialize an empty one
             if (model.ContactForm == null)
             {
                 model.ContactForm = new ContactFormModel()
                 {
-                    Subject = "Insert Test Subject Here",
-                    Body = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                    Subject = "No contact forms submitted",
+                    Body = "You have not submitted any contact forms"
                 };
             }
 
             return View(model);
         }
+        [HttpPost]
+        public ActionResult ContactUs(ContactFormVM model)
+        {
+            AddContactForm(model);
 
+            return Content("Submission Successful!");
+        }
         public ActionResult ManagePets()
         {
             return View();
@@ -197,15 +202,15 @@ namespace WebAppTemplate.Controllers
             return RedirectToAction("ManageBookings");
         }
 
-        public ActionResult AddContactForm()
+        public ActionResult AddContactForm(ContactFormVM model)
         {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
 
             ContactFormModel newContactForm = new ContactFormModel();
             newContactForm.User = null;
             //newContactForm.User = dbContext.Users.FirstOrDefault(u => u.Name == User.Identity.Name);
-            newContactForm.Subject = Request.Form["Subject"];
-            newContactForm.Body = Request.Form["Body"];
+            newContactForm.Subject = model.ContactForm.Subject;
+            newContactForm.Body = model.ContactForm.Body;
             newContactForm.Responded = false;
 
             dbContext.ContactForms.Add(newContactForm);

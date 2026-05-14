@@ -173,6 +173,10 @@
     <Compile Include="Migrations\202605132015497_Remove String.Empty from ContactFormModel Subject.Designer.cs">
       <DependentUpon>202605132015497_Remove String.Empty from ContactFormModel Subject.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202605142027083_Make User optional.cs" />
+    <Compile Include="Migrations\202605142027083_Make User optional.Designer.cs">
+      <DependentUpon>202605142027083_Make User optional.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AnimalTypeModel.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -310,6 +314,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202605132015497_Remove String.Empty from ContactFormModel Subject.resx">
       <DependentUpon>202605132015497_Remove String.Empty from ContactFormModel Subject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202605142027083_Make User optional.resx">
+      <DependentUpon>202605142027083_Make User optional.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
