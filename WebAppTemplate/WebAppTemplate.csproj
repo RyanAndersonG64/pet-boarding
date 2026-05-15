@@ -160,13 +160,24 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IdentityModels.cs" />
     <Compile Include="ManageViewModels.cs" />
+    <Compile Include="Migrations\202605132015497_Remove String.Empty from ContactFormModel Subject.cs" />
+    <Compile Include="Migrations\202605132015497_Remove String.Empty from ContactFormModel Subject.Designer.cs">
+      <DependentUpon>202605132015497_Remove String.Empty from ContactFormModel Subject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202605142027083_Make User optional.cs" />
+    <Compile Include="Migrations\202605142027083_Make User optional.Designer.cs">
+      <DependentUpon>202605142027083_Make User optional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AnimalTypeModel.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\BookingModel.cs" />
@@ -180,6 +191,7 @@
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ContactFormVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -251,10 +263,19 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\User\ContactUs.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\ManageBookings.cshtml" />
+    <Content Include="Views\User\ManagePets.cshtml" />
+    <Content Include="Views\User\_UserLayout.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\ManageBookings.cshtml" />
+    <Content Include="Views\Admin\ManageContactForms.cshtml" />
+    <Content Include="Views\Admin\ManagePets.cshtml" />
+    <Content Include="Views\Admin\_AdminLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -282,6 +303,14 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202605132015497_Remove String.Empty from ContactFormModel Subject.resx">
+      <DependentUpon>202605132015497_Remove String.Empty from ContactFormModel Subject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202605142027083_Make User optional.resx">
+      <DependentUpon>202605142027083_Make User optional.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
