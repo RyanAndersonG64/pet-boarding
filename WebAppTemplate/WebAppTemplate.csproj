@@ -167,6 +167,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="IdentityModels.cs" />
     <Compile Include="IdentityModels\ApplicationDbContext.cs" />
     <Compile Include="IdentityModels\ApplicationUser.cs" />
     <Compile Include="ManageViewModels.cs" />
@@ -277,7 +278,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
