@@ -167,7 +167,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="IdentityModels.cs" />
+    <Compile Include="IdentityModels\ApplicationDbContext.cs" />
+    <Compile Include="IdentityModels\ApplicationUser.cs" />
     <Compile Include="ManageViewModels.cs" />
     <Compile Include="Migrations\202605132015497_Remove String.Empty from ContactFormModel Subject.cs" />
     <Compile Include="Migrations\202605132015497_Remove String.Empty from ContactFormModel Subject.Designer.cs">
@@ -276,6 +277,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
