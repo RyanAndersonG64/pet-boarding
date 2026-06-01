@@ -167,7 +167,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="IdentityModels.cs" />
     <Compile Include="IdentityModels\ApplicationDbContext.cs" />
     <Compile Include="IdentityModels\ApplicationUser.cs" />
     <Compile Include="ManageViewModels.cs" />
