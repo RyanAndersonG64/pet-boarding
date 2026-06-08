@@ -176,6 +176,18 @@
     <Compile Include="Migrations\202605142027083_Make User optional.Designer.cs">
       <DependentUpon>202605142027083_Make User optional.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202606082214032_AddNameAndPhoneNumberToApplicationUser.cs" />
+    <Compile Include="Migrations\202606082214032_AddNameAndPhoneNumberToApplicationUser.Designer.cs">
+      <DependentUpon>202606082214032_AddNameAndPhoneNumberToApplicationUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202606082216199_Remove-Unnecessary-MaxLength-from-RegisterViewModel-Name.cs" />
+    <Compile Include="Migrations\202606082216199_Remove-Unnecessary-MaxLength-from-RegisterViewModel-Name.Designer.cs">
+      <DependentUpon>202606082216199_Remove-Unnecessary-MaxLength-from-RegisterViewModel-Name.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202606082243516_Add-Name-Field-To-SignInManager-And-LoginViewModel.cs" />
+    <Compile Include="Migrations\202606082243516_Add-Name-Field-To-SignInManager-And-LoginViewModel.Designer.cs">
+      <DependentUpon>202606082243516_Add-Name-Field-To-SignInManager-And-LoginViewModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AnimalTypeModel.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -303,6 +315,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202605142027083_Make User optional.resx">
       <DependentUpon>202605142027083_Make User optional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606082214032_AddNameAndPhoneNumberToApplicationUser.resx">
+      <DependentUpon>202606082214032_AddNameAndPhoneNumberToApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606082216199_Remove-Unnecessary-MaxLength-from-RegisterViewModel-Name.resx">
+      <DependentUpon>202606082216199_Remove-Unnecessary-MaxLength-from-RegisterViewModel-Name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202606082243516_Add-Name-Field-To-SignInManager-And-LoginViewModel.resx">
+      <DependentUpon>202606082243516_Add-Name-Field-To-SignInManager-And-LoginViewModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -116,7 +116,7 @@ namespace WebAppTemplate
         {
             string emailSMTPURL = ConfigurationManager.AppSettings["emailSMTPURL"].ToString();
             string portNumber = ConfigurationManager.AppSettings["portNumber"].ToString();
-            string emailSMTPUserNameHash = ConfigurationManager.AppSettings["emailSMTPUserNameHash"].ToString(); // added
+            string emailSMTPUserNameHash = ConfigurationManager.AppSettings["emailSMTPUserNameHash"].ToString();
             string emailSMTPPasswordHash = ConfigurationManager.AppSettings["emailSMTPPasswordHash"].ToString();
             string emailFromAddress = ConfigurationManager.AppSettings["emailFromAddress"].ToString();
             string emailFromName = ConfigurationManager.AppSettings["emailFromName"].ToString();
@@ -164,7 +164,7 @@ namespace WebAppTemplate
         }
 
         public static MailMessage GenerateMailMessage(string destination, string subject, string body)
-        {
+        {EmailServiceCredentials.PopulateEmailCredentialsFromAppConfig();
             MailMessage mailMessage = new MailMessage(new MailAddress(EmailServiceCredentials.EmailFromAddress, EmailServiceCredentials.EmailFromName), new MailAddress(destination));
             mailMessage.Subject = EmailServiceCredentials.EmailAppName + " - " + subject;
             mailMessage.Body = body;
