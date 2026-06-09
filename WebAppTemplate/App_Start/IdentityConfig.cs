@@ -93,14 +93,15 @@ namespace WebAppTemplate
     public static class EmailServiceCredentials
     {
         public static string EmailSMTPUrl { get; private set; }
-        public static string PortNumber { get; private set; }
+        public static int PortNumber { get; private set; }
         public static string EmailSMTPUserNameHash { get; private set; }   // added
         public static string EmailSMTPPasswordHash { get; private set; }
         public static string EmailFromAddress { get; private set; }
         public static string EmailFromName { get; private set; }
         public static string EmailAppName { get; private set; }
+        private static bool _credentialsLoaded;
 
-        public static void SetCredentials(string emailSMTPUrl, string portNumber, string emailSMTPUserNameHash, string emailSMTPPasswordHash, string emailFromAddress, string emailFromName, string emailAppName)
+        public static void SetCredentials(string emailSMTPUrl, int portNumber, string emailSMTPUserNameHash, string emailSMTPPasswordHash, string emailFromAddress, string emailFromName, string emailAppName)
         {
             EmailSMTPUrl = emailSMTPUrl;
             PortNumber = portNumber;
@@ -109,20 +110,52 @@ namespace WebAppTemplate
             EmailFromAddress = emailFromAddress;
             EmailFromName = emailFromName;
             EmailAppName = emailAppName;
+            _credentialsLoaded = true;
         }
 
         // Call from global application
         public static void PopulateEmailCredentialsFromAppConfig()
         {
-            string emailSMTPURL = ConfigurationManager.AppSettings["emailSMTPURL"].ToString();
-            string portNumber = ConfigurationManager.AppSettings["portNumber"].ToString();
-            string emailSMTPUserNameHash = ConfigurationManager.AppSettings["emailSMTPUserNameHash"].ToString();
-            string emailSMTPPasswordHash = ConfigurationManager.AppSettings["emailSMTPPasswordHash"].ToString();
-            string emailFromAddress = ConfigurationManager.AppSettings["emailFromAddress"].ToString();
-            string emailFromName = ConfigurationManager.AppSettings["emailFromName"].ToString();
-            string emailAppName = ConfigurationManager.AppSettings["emailAppName"].ToString();
+            string emailSMTPURL = GetRequiredAppSetting("emailSMTPURL");
+            int portNumber = GetRequiredIntAppSetting("portNumber");
+            string emailSMTPUserNameHash = GetRequiredAppSetting("emailSMTPUserNameHash");
+            string emailSMTPPasswordHash = GetRequiredAppSetting("emailSMTPPasswordHash");
+            string emailFromAddress = GetRequiredAppSetting("emailFromAddress");
+            string emailFromName = GetRequiredAppSetting("emailFromName");
+            string emailAppName = GetRequiredAppSetting("emailAppName");
 
             SetCredentials(emailSMTPURL, portNumber, emailSMTPUserNameHash, emailSMTPPasswordHash, emailFromAddress, emailFromName, emailAppName);
+        }
+
+        public static void EnsureCredentialsLoaded()
+        {
+            if (!_credentialsLoaded)
+            {
+                PopulateEmailCredentialsFromAppConfig();
+            }
+        }
+
+        private static string GetRequiredAppSetting(string key)
+        {
+            string value = ConfigurationManager.AppSettings[key];
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ConfigurationErrorsException("Missing required appSettings key '" + key + "'.");
+            }
+
+            return value.Trim();
+        }
+
+        private static int GetRequiredIntAppSetting(string key)
+        {
+            string value = GetRequiredAppSetting(key);
+            int parsedValue;
+            if (!int.TryParse(value, out parsedValue))
+            {
+                throw new ConfigurationErrorsException("appSettings key '" + key + "' must be a valid number.");
+            }
+
+            return parsedValue;
         }
     }
 
@@ -147,16 +180,20 @@ namespace WebAppTemplate
 
     public static class EmailHelpers
     {
-        public static Task SendEmailAsync(string destination, string subject, string body)
+        public static async Task SendEmailAsync(string destination, string subject, string body)
         {
-            MailMessage mailMessage = GenerateMailMessage(destination, subject, body);
-            return GetSmtpClient().SendMailAsync(mailMessage);
+            EmailServiceCredentials.EnsureCredentialsLoaded();
+            using (MailMessage mailMessage = GenerateMailMessage(destination, subject, body))
+            using (SmtpClient smtpClient = GetSmtpClient())
+            {
+                await smtpClient.SendMailAsync(mailMessage);
+            }
         }
 
         public static SmtpClient GetSmtpClient()
         {
-            SmtpClient smtpClient = new SmtpClient(EmailServiceCredentials.EmailSMTPUrl);
-            smtpClient.Port = 587;
+            EmailServiceCredentials.EnsureCredentialsLoaded();
+            SmtpClient smtpClient = new SmtpClient(EmailServiceCredentials.EmailSMTPUrl, EmailServiceCredentials.PortNumber);
             smtpClient.EnableSsl = true;
             smtpClient.Credentials = new NetworkCredential(EmailServiceCredentials.EmailSMTPUserNameHash, EmailServiceCredentials.EmailSMTPPasswordHash);
 
@@ -164,7 +201,8 @@ namespace WebAppTemplate
         }
 
         public static MailMessage GenerateMailMessage(string destination, string subject, string body)
-        {EmailServiceCredentials.PopulateEmailCredentialsFromAppConfig();
+        {
+            EmailServiceCredentials.EnsureCredentialsLoaded();
             MailMessage mailMessage = new MailMessage(new MailAddress(EmailServiceCredentials.EmailFromAddress, EmailServiceCredentials.EmailFromName), new MailAddress(destination));
             mailMessage.Subject = EmailServiceCredentials.EmailAppName + " - " + subject;
             mailMessage.Body = body;
