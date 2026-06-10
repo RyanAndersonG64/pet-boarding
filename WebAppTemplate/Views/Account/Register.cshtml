@@ -1,4 +1,4 @@
-﻿@model WebAppTemplate.Models.RegisterViewModel
+﻿@model WebAppTemplate.ViewModels.RegisterViewModel
 @{
     ViewBag.Title = "Register";
 }
@@ -12,6 +12,18 @@
         <h4>Create a new account.</h4>
         <hr />
         @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="row">
+            @Html.LabelFor(m => m.Name, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="row">
+            @Html.LabelFor(m => m.PhoneNumber, new { @class = "col-md-2 col-form-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+            </div>
+        </div>
         <div class="row">
             @Html.LabelFor(m => m.Email, new { @class = "col-md-2 col-form-label" })
             <div class="col-md-10">

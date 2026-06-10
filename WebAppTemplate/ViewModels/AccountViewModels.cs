@@ -30,6 +30,16 @@ namespace WebAppTemplate.ViewModels
     public class RegisterViewModel
     {
         [Required]
+        [StringLength(50, ErrorMessage = "The {0} must not exceed {1} characters.")]
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [Required]
+        [Phone(ErrorMessage = "Please enter a valid phone number.")]
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

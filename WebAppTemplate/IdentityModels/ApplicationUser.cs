@@ -7,6 +7,14 @@ namespace WebAppTemplate.IdentityModels
 {
     public class ApplicationUser : IdentityUser
     {
+        public ApplicationUser()
+        {
+            Name = string.Empty;
+        }
+
+        public string Name { get; set; }
+        public string PhoneNumber { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
