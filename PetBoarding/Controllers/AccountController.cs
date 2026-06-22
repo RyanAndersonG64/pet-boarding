@@ -9,7 +9,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using PetBoarding.IdentityModels;
-using PetBoarding.Models;
 using PetBoarding.ViewModels;
 
 namespace PetBoarding.Controllers
