@@ -1,5 +1,5 @@
-name: WebAppTemplate
-run-name: WebAppTemplateCI
+name: PetBoarding
+run-name: PetBoardingCI
 on:
   push:
     branches:
@@ -12,11 +12,11 @@ on:
   workflow_dispatch: # Enables manual trigger
 
 env:
-  SOLUTION_FILE_PATH: .
+  SOLUTION_FILE_PATH: PetBoarding.sln
   BUILD_CONFIGURATION: Release
   PUBLISH_DIR: '${{ github.workspace }}/publish'
   PACKAGENAME: 'test-deploy'
-  PACKAGE_TMP_DIR: '${{ github.workspace }}\\WebAppTemplate\\obj\\Release\\Package\\PackageTmp'
+  PACKAGE_TMP_DIR: '${{ github.workspace }}\\PetBoarding\\obj\\Release\\Package\\PackageTmp'
 
 permissions:
   contents: read
