@@ -37,7 +37,7 @@ jobs:
       uses: nuget/setup-nuget@v1
       
     - name: Restore NuGet
-      run: nuget restore ${{ env.SOLUTION_FILE_PATH }}
+      run: nuget restore PetBoarding.sln
       
     - name: Create Publish Directory
       run: mkdir -p ${{ env.PUBLISH_DIR }}
