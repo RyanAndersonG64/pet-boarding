@@ -13,9 +13,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/WebAppTemplateTests/bin/Debug/net9.0/WebAppTemplateTests.dll",
+            "program": "${workspaceFolder}/PetBoardingTests/bin/Debug/net9.0/PetBoardingTests.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/WebAppTemplateTests",
+            "cwd": "${workspaceFolder}/PetBoardingTests",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
