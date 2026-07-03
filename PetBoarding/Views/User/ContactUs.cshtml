@@ -8,9 +8,21 @@
     <h2 id="title">@ViewBag.Title</h2>
     <h3>@ViewBag.Message</h3>
 
-    <h4>@Model.ContactForm.Subject</h4>
-    <h6>Responded: @Model.ContactForm.Responded</h6>
-    <p>@Model.ContactForm.Body</p>
+    <h4>Your Submissions:</h4>
+    @if (!Model.ContactForms.Any())
+    {
+        <p>You have not submitted any contact forms.</p>
+    }
+    else
+    {
+        foreach (var form in Model.ContactForms)
+        {
+            <h5>@form.Subject</h5>
+            <h6>Responded: @form.Responded</h6>
+            <p>@form.Body</p>
+            <hr />
+        }
+    }
 
     <div class="col-md-8">
         <section id="contactSubmissionForm">

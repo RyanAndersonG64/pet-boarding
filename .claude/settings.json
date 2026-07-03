@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"c:/Users/bounc/PetBoarding_RyanAnderson/packages/EntityFramework.6.5.1/tools/net45/any/ef6.exe\" migrations *)",
+      "Bash(grep -n \"Migrations\\\\\\\\\\\\\\\\\" PetBoarding/PetBoarding.csproj)",
+      "Bash(sqlcmd -S \"\\(LocalDb\\)\\\\MSSQLLocalDB\" -Q \"SELECT name FROM sys.databases WHERE name = 'RyanPetBoarding'\" -W)",
+      "Bash(sqlcmd -S \"\\(LocalDb\\)\\\\MSSQLLocalDB\" -d RyanPetBoarding -Q \"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' ORDER BY TABLE_NAME\" -W)",
+      "Bash(sqlcmd -S \"\\(LocalDb\\)\\\\MSSQLLocalDB\" -d RyanPetBoarding -Q \"SELECT MigrationId, ContextKey FROM dbo.__MigrationHistory ORDER BY MigrationId\" -W)",
+      "Bash(\"../packages/EntityFramework.6.5.1/tools/net45/any/ef6.exe\" migrations *)",
+      "Bash(\"../packages/EntityFramework.6.5.1/tools/net45/any/ef6.exe\" database *)",
+      "Bash(sqlcmd -S \"\\(LocalDb\\)\\\\MSSQLLocalDB\" -d RyanPetBoarding -Q \"SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='AspNetUsers' ORDER BY ORDINAL_POSITION\" -W)",
+      "Bash(sqlcmd -S \"\\(LocalDb\\)\\\\MSSQLLocalDB\" -d RyanPetBoarding -Q \"SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='PetOwnerModels'\" -W)",
+      "Bash(sqlcmd -S \"\\(LocalDb\\)\\\\MSSQLLocalDB\" -Q \"SELECT name, state_desc FROM sys.databases WHERE name = 'RyanPetBoarding'\" -W)",
+      "Bash(sqlcmd -S \"\\(LocalDb\\)\\\\MSSQLLocalDB\" -Q \"SELECT name FROM sys.databases ORDER BY name\" -W)",
+      "Bash(sqlcmd -S \"\\(LocalDb\\)\\\\MSSQLLocalDB\" -Q \"ALTER DATABASE [DefaultConnection] SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE [DefaultConnection];\" -W)",
+      "Bash(sqlcmd -S \"\\(LocalDb\\)\\\\MSSQLLocalDB\" -d RyanPetBoarding -Q \"SELECT TABLE_NAME, COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME IN \\('PetOwnerModels','BookingModels','ContactFormModels'\\) AND COLUMN_NAME LIKE 'User%'\" -W)",
+      "Bash(sqlcmd -S \"\\(LocalDb\\)\\\\MSSQLLocalDB\" -Q \"ALTER DATABASE RyanPetBoarding SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE RyanPetBoarding;\" -W)",
+      "Bash(rm PetBoarding/Migrations/202607031857243_InitialCreate.cs PetBoarding/Migrations/202607031857243_InitialCreate.Designer.cs PetBoarding/Migrations/202607031857243_InitialCreate.resx)"
+    ]
+  }
+}

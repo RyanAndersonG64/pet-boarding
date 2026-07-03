@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using PetBoarding.IdentityModels;
 
 namespace PetBoarding.Models
 {
@@ -10,7 +11,6 @@ namespace PetBoarding.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        //public DbSet<UserModel> Users { get; set; }
         public DbSet<PetModel> Pets { get; set; }
         public DbSet<AnimalTypeModel> AnimalTypes { get; set; }
         public DbSet<EmergencyContactModel> EmergencyContacts { get; set; }

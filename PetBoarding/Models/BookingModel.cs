@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using PetBoarding.IdentityModels;
 
 namespace PetBoarding.Models
 {
@@ -10,7 +11,7 @@ namespace PetBoarding.Models
     {
         [Key]
         public Guid BookingId { get; set; }
-        public UserModel User { get; set; }
+        public ApplicationUser User { get; set; }
         public DateTime ScheduledCheckIn { get; set; }
         public DateTime? ActualCheckIn { get; set; }
         public EmployeeModel CheckedInBy { get; set; }

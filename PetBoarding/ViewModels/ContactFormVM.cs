@@ -9,5 +9,6 @@ namespace PetBoarding.ViewModels
     public class ContactFormVM
     {
         public ContactFormModel ContactForm { get; set; }
+        public List<ContactFormModel> ContactForms { get; set; }
     }
 }
