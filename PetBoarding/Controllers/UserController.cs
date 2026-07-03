@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PetBoarding.IdentityModels;
 using PetBoarding.Models;
 using PetBoarding.ViewModels;
 
@@ -30,29 +31,36 @@ namespace PetBoarding.Controllers
 
             ContactFormVM model = new ContactFormVM();
 
-            //model.ContactForm = new Models.ApplicationDbContext().ContactForms.FirstOrDefault(cf => cf.User.UserName == User.Identity.Name);
-            model.ContactForm = new Models.ApplicationDbContext().ContactForms.FirstOrDefault();
-            if (model.ContactForm == null)
-            {
-                model.ContactForm = new ContactFormModel()
-                {
-                    Subject = "No contact forms submitted",
-                    Body = "You have not submitted any contact forms"
-                };
-            }
+            model.ContactForms = new Models.ApplicationDbContext().ContactForms
+                .Where(cf => cf.User.UserName == User.Identity.Name)
+                .ToList();
+            model.ContactForm = new ContactFormModel();
 
             return View(model);
         }
+
         [HttpPost]
         public ActionResult ContactUs(ContactFormVM model)
         {
             AddContactForm(model);
 
-            return Content("Submission Successful!");
+            string redirectUrl = Url.Action("ContactUs", "User");
+            return Content($"<html><head><meta http-equiv='refresh' content='5;url={redirectUrl}' /></head><body>Submission Successful!</body></html>", "text/html");
         }
+
         public ActionResult ManagePets()
         {
-            return View();
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
+
+            ManagePetsVM model = new ManagePetsVM();
+            model.Pets = dbContext.PetOwners
+                .Where(po => po.User.UserName == User.Identity.Name)
+                .Select(po => po.Pet)
+                .ToList();
+            model.AnimalTypes = dbContext.AnimalTypes.ToList();
+            model.EmergencyContacts = dbContext.EmergencyContacts.ToList();
+
+            return View(model);
         }
 
 
@@ -66,14 +74,14 @@ namespace PetBoarding.Controllers
         //---------------------
 
         // Creation logic
-        public ActionResult AddPetOwner(PetModel pet)
+        public ActionResult AddPetOwner(Guid petId)
         {
             Models.ApplicationDbContext context = new Models.ApplicationDbContext();
 
             PetOwnerModel newPetOwner = new PetOwnerModel();
-            //newPetOwner.User = new Models.ApplicationDbContext().Users.FirstOrDefault(u => u.Name == User.Identity.Name);
+            newPetOwner.User = context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
-            newPetOwner.Pet = pet;
+            newPetOwner.Pet = context.Pets.Find(petId);
 
             context.PetOwners.Add(newPetOwner);
             try
@@ -139,12 +147,14 @@ namespace PetBoarding.Controllers
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
 
             PetModel newPet = new PetModel();
-            newPet.Name = Request.Form["Name"];
-            newPet.Breed = Request.Form["Breed"];
-            newPet.AnimalType = dbContext.AnimalTypes.FirstOrDefault(a => a.Type == Request.Form["AnimalType"]);
-            newPet.Age = int.Parse(Request.Form["Age"]);
-            newPet.SpecialInstructions = Request.Form["SpecialInstructions"];
-            newPet.EmergencyContact = dbContext.EmergencyContacts.FirstOrDefault(e => e.EmergencyContactId == Guid.Parse(Request.Form["EmergencyContactId"]));
+            newPet.Name = Request.Form["Pet.Name"];
+            newPet.Breed = Request.Form["Pet.Breed"];
+            Guid animalTypeId = Guid.Parse(Request.Form["AnimalType"]);
+            newPet.AnimalType = dbContext.AnimalTypes.FirstOrDefault(a => a.AnimalTypeId == animalTypeId);
+            newPet.Age = int.Parse(Request.Form["Pet.Age"]);
+            newPet.SpecialInstructions = Request.Form["Pet.SpecialInstructions"];
+            Guid emergencyContactId = Guid.Parse(Request.Form["EmergencyContactId"]);
+            newPet.EmergencyContact = dbContext.EmergencyContacts.FirstOrDefault(e => e.EmergencyContactId == emergencyContactId);
 
             dbContext.Pets.Add(newPet);
             try
@@ -158,7 +168,7 @@ namespace PetBoarding.Controllers
                 ViewBag.ErrorMessage = "An error occurred while adding the pet: " + ex.Message;
                 return View("ManagePets");
             }
-            AddPetOwner(newPet);
+            AddPetOwner(newPet.PetId);
             return RedirectToAction("ManagePets");
         }
 
@@ -176,7 +186,7 @@ namespace PetBoarding.Controllers
             }
 
             BookingModel newBooking = new BookingModel();
-            //newBooking.User = dbContext.Users.FirstOrDefault(u => u.Name == User.Identity.Name);
+            newBooking.User = dbContext.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
             newBooking.ScheduledCheckIn = DateTime.Parse(Request.Form["ScheduledCheckIn"]);
             newBooking.ActualCheckIn = null;
             newBooking.CheckedInBy = null;
@@ -207,8 +217,7 @@ namespace PetBoarding.Controllers
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
 
             ContactFormModel newContactForm = new ContactFormModel();
-            newContactForm.User = null;
-            //newContactForm.User = dbContext.Users.FirstOrDefault(u => u.Name == User.Identity.Name);
+            newContactForm.User = dbContext.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
             newContactForm.Subject = model.ContactForm.Subject;
             newContactForm.Body = model.ContactForm.Body;
             newContactForm.Responded = false;

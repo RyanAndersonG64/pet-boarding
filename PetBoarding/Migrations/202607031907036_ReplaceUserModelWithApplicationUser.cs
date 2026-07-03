@@ -1,9 +1,9 @@
-namespace PetBoarding.Migrations
+﻿namespace PetBoarding.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class RemoveStringEmptyfromContactFormModelSubject : DbMigration
+    public partial class ReplaceUserModelWithApplicationUser : DbMigration
     {
         public override void Up()
         {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using PetBoarding.IdentityModels;
 
 namespace PetBoarding.Models
 {
@@ -11,7 +12,7 @@ namespace PetBoarding.Models
         [Key]
         public Guid ContactFormId { get; set; }
         //[Required]
-        public UserModel User { get; set; }
+        public ApplicationUser User { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
         public bool Responded { get; set; } = false;

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using PetBoarding.IdentityModels;
 
 namespace PetBoarding.Models
 {
@@ -12,7 +13,7 @@ namespace PetBoarding.Models
         [Key]
         public Guid PetOwnerId { get; set; }
         [Required]
-        public UserModel User { get; set; }
+        public ApplicationUser User { get; set; }
         [Required]
         public PetModel Pet { get; set; }
         public PetOwnerModel()
