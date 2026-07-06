@@ -340,19 +340,13 @@ namespace PetBoarding.Controllers
             {
                 return HttpNotFound();
             }
-            // DeletePetOwner for all PetOwners associated with this pet
+            // Remove all PetOwners associated with this pet
             var petOwners = dbContext.PetOwners.Where(po => po.Pet.PetId == id).ToList();
-            foreach (var petOwner in petOwners)
-            {
-                DeletePetOwner(petOwner.PetOwnerId, pet);
-            }
+            dbContext.PetOwners.RemoveRange(petOwners);
 
-            // DeletePetBooking for all PetBookings associated with this pet
+            // Remove all PetBookings associated with this pet
             var petBookings = dbContext.PetBookings.Where(pb => pb.Pet.PetId == id).ToList();
-            foreach (var petBooking in petBookings)
-            {
-                DeletePetBooking(petBooking.PetBookingId, pet);
-            }
+            dbContext.PetBookings.RemoveRange(petBookings);
 
             dbContext.Pets.Remove(pet);
             try
@@ -378,12 +372,9 @@ namespace PetBoarding.Controllers
             {
                 return HttpNotFound();
             }
-            // DeletePetBooking for all PetBookings associated with this booking
+            // Remove all PetBookings associated with this booking
             var petBookings = dbContext.PetBookings.Where(pb => pb.Booking.BookingId == id).ToList();
-            foreach (var petBooking in petBookings)
-            {
-                DeletePetBooking(petBooking.PetBookingId, petBooking.Pet);
-            }
+            dbContext.PetBookings.RemoveRange(petBookings);
 
             dbContext.Bookings.Remove(booking);
             try

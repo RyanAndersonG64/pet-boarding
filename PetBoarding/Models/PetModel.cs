@@ -17,6 +17,7 @@ namespace PetBoarding.Models
         public string Breed { get; set; } = string.Empty;
         public int Age { get; set; } = 0;
         [MaxLength(1000)]
+        [Display(Name = "Special Instructions")]
         public string SpecialInstructions { get; set; } = string.Empty;
         [Required]
         public EmergencyContactModel EmergencyContact { get; set; }

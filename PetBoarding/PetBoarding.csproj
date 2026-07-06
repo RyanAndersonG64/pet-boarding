@@ -176,6 +176,10 @@
     <Compile Include="Migrations\202607031907036_ReplaceUserModelWithApplicationUser.Designer.cs">
       <DependentUpon>202607031907036_ReplaceUserModelWithApplicationUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202607061851513_SpecialInstructionsDisplayName.cs" />
+    <Compile Include="Migrations\202607061851513_SpecialInstructionsDisplayName.Designer.cs">
+      <DependentUpon>202607061851513_SpecialInstructionsDisplayName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AnimalTypeModel.cs" />
     <Compile Include="Models\BookingModel.cs" />
@@ -302,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202607031907036_ReplaceUserModelWithApplicationUser.resx">
       <DependentUpon>202607031907036_ReplaceUserModelWithApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202607061851513_SpecialInstructionsDisplayName.resx">
+      <DependentUpon>202607061851513_SpecialInstructionsDisplayName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
