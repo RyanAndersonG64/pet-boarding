@@ -62,6 +62,17 @@ namespace PetBoarding.Controllers
 
             return View(model);
         }
+        public ActionResult UpdatePet(Guid id)
+        {
+            Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
+
+            UpdatePetVM model = new UpdatePetVM();
+            model.Pet = dbContext.Pets.FirstOrDefault(pet => pet.PetId == id);
+            model.AnimalTypes = dbContext.AnimalTypes.ToList();
+            model.EmergencyContacts = dbContext.EmergencyContacts.ToList();
+
+            return View(model);
+        }
 
 
         public ActionResult ManageBookings()
@@ -250,20 +261,23 @@ namespace PetBoarding.Controllers
         }
 
         // Update logic
-        public ActionResult UpdatePet(Guid id, PetModel updatedPet)
+        [HttpPost]
+        public ActionResult UpdatePet(Guid id, PetModel pet)
         {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
-            PetModel pet = dbContext.Pets.FirstOrDefault(p => p.PetId == id);
-            if (pet == null)
+            PetModel existingPet = dbContext.Pets.FirstOrDefault(p => p.PetId == id);
+            if (existingPet == null)
             {
                 return HttpNotFound();
             }
-            // Update pet properties here
-            pet.Name = updatedPet.Name;
-            pet.Age = updatedPet.Age;
-            pet.Breed = updatedPet.Breed;
-            pet.SpecialInstructions = updatedPet.SpecialInstructions;
-            pet.EmergencyContact = updatedPet.EmergencyContact;
+            existingPet.Name = pet.Name;
+            existingPet.Age = pet.Age;
+            existingPet.Breed = pet.Breed;
+            existingPet.SpecialInstructions = pet.SpecialInstructions;
+            Guid animalTypeId = Guid.Parse(Request.Form["AnimalType"]);
+            existingPet.AnimalType = dbContext.AnimalTypes.FirstOrDefault(a => a.AnimalTypeId == animalTypeId);
+            Guid emergencyContactId = Guid.Parse(Request.Form["EmergencyContactId"]);
+            existingPet.EmergencyContact = dbContext.EmergencyContacts.FirstOrDefault(e => e.EmergencyContactId == emergencyContactId);
 
             try
             {
@@ -276,7 +290,7 @@ namespace PetBoarding.Controllers
                 ViewBag.ErrorMessage = "An error occurred while updating the pet: " + ex.Message;
                 return View("ManagePets");
             }
-            return View("ManagePets");
+            return RedirectToAction("ManagePets");
         }
 
 
