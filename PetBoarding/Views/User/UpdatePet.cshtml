@@ -1,0 +1,79 @@
+@model PetBoarding.ViewModels.UpdatePetVM
+
+@{
+    ViewBag.Title = "Update Pet";
+    Layout = "~/Views/User/_UserLayout.cshtml";
+}
+<main aria-labelledby="title">
+    <h2 id="title">@ViewBag.Title</h2>
+    <h3>@ViewBag.Message</h3>
+
+    <div key=@Model.Pet.PetId>
+        <div class="row">
+            <div class="col-md-10">
+                <section id="AddPetForm">
+                    @using (Html.BeginForm("UpdatePet", "User", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post,
+                    new { role = "form" }
+                    ))
+                    {
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="row">
+                            @Html.LabelFor(m => m.Pet.Name, new { @class = "col-md-2 col-form-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.Pet.Name, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Pet.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(m => m.Pet.Breed, new { @class = "col-md-2 col-form-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.Pet.Breed, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Pet.Breed, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(m => m.Pet.Age, new { @class = "col-md-2 col-form-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.Pet.Age, new { @class = "form-control", type = "number" })
+                                @Html.ValidationMessageFor(m => m.Pet.Age, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(m => m.Pet.SpecialInstructions, new { @class = "col-md-2 col-form-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(m => m.Pet.SpecialInstructions, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Pet.SpecialInstructions, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(m => m.Pet.EmergencyContact, new { @class = "col-md-2 col-form-label" })
+                            <div class="col-md-10">
+                                <select name='EmergencyContactId' id='emergency-contact-dropdown'>
+                                    @foreach (var e in Model.EmergencyContacts)
+                                    {
+                                        <option value=@e.EmergencyContactId>@e.Name</option>
+                                    }
+                                </select>
+                                @Html.ValidationMessageFor(m => m.Pet.EmergencyContact, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(m => m.Pet.AnimalType, new { @class = "col-md-2 col-form-label" })
+                            <div class="col-md-10">
+                                <select name='AnimalType' id='animal-type-dropdown'>
+                                    @foreach (var e in Model.AnimalTypes)
+                                    {
+                                        <option value=@e.AnimalTypeId>@e.Type</option>
+                                    }
+                                </select>
+                                @Html.ValidationMessageFor(m => m.Pet.AnimalType, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <input type="hidden" name="id" value="@Model.Pet.PetId" />
+                        <input type="submit" value="Update" class="btn btn-outline-dark" />
+                    }
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
