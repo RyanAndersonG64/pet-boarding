@@ -70,6 +70,12 @@ namespace PetBoarding.Controllers
         {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
 
+            bool isOwned = dbContext.PetOwners.Any(po => po.User.UserName == User.Identity.Name && po.Pet.PetId == id);
+            if (!isOwned)
+            {
+                return HttpNotFound();
+            }
+
             UpdatePetVM model = new UpdatePetVM();
             model.Pet = dbContext.Pets.FirstOrDefault(pet => pet.PetId == id);
             model.AnimalTypes = dbContext.AnimalTypes.ToList();
@@ -253,11 +259,17 @@ namespace PetBoarding.Controllers
         }
 
         // Read logic
+        [Authorize]
         public ActionResult ViewPet(Guid id)
         {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
             PetModel pet = dbContext.Pets.FirstOrDefault(p => p.PetId == id);
             if (pet == null)
+            {
+                return HttpNotFound();
+            }
+            bool isOwned = dbContext.PetOwners.Any(po => po.User.UserName == User.Identity.Name && po.Pet.PetId == id);
+            if (!isOwned)
             {
                 return HttpNotFound();
             }
@@ -269,11 +281,21 @@ namespace PetBoarding.Controllers
         public ActionResult UpdatePet(Guid id, PetModel pet)
         {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
+
             PetModel existingPet = dbContext.Pets.FirstOrDefault(p => p.PetId == id);
             if (existingPet == null)
             {
                 return HttpNotFound();
             }
+
+            // check that pet belongs to current user
+            bool isOwned = dbContext.PetOwners.Any(po => po.User.UserName == User.Identity.Name && po.Pet.PetId == existingPet.PetId);
+
+            if (!isOwned)
+            {
+                return HttpNotFound();
+            }
+
             existingPet.Name = pet.Name;
             existingPet.Age = pet.Age;
             existingPet.Breed = pet.Breed;
@@ -350,11 +372,17 @@ namespace PetBoarding.Controllers
             return RedirectToAction("ManageBookings");
         }
 
+        [Authorize]
         public ActionResult DeletePet(Guid id)
         {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
             PetModel pet = dbContext.Pets.FirstOrDefault(p => p.PetId == id);
             if (pet == null)
+            {
+                return HttpNotFound();
+            }
+            bool isOwned = dbContext.PetOwners.Any(po => po.User.UserName == User.Identity.Name && po.Pet.PetId == id);
+            if (!isOwned)
             {
                 return HttpNotFound();
             }
