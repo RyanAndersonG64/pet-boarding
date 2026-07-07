@@ -20,11 +20,13 @@ namespace PetBoarding.Controllers
         //  Routes and Views
         //---------------------
 
+        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult ContactUs()
         {
             ViewBag.Message = "View and submit contact forms";
@@ -48,6 +50,7 @@ namespace PetBoarding.Controllers
             return Content($"<html><head><meta http-equiv='refresh' content='5;url={redirectUrl}' /></head><body>Submission Successful!</body></html>", "text/html");
         }
 
+        [Authorize]
         public ActionResult ManagePets()
         {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
@@ -62,6 +65,7 @@ namespace PetBoarding.Controllers
 
             return View(model);
         }
+        [Authorize]
         public ActionResult UpdatePet(Guid id)
         {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
@@ -74,7 +78,7 @@ namespace PetBoarding.Controllers
             return View(model);
         }
 
-
+        [Authorize]
         public ActionResult ManageBookings()
         {
             return View();
@@ -173,7 +177,7 @@ namespace PetBoarding.Controllers
                 dbContext.SaveChanges();
             }
             catch (Exception ex)
-            { 
+            {
                 // Handle exceptions (e.g., log the error, show an error message, etc.)
                 // For simplicity, we will just return the error message in the view.
                 ViewBag.ErrorMessage = "An error occurred while adding the pet: " + ex.Message;
