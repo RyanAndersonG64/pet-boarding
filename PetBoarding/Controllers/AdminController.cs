@@ -9,31 +9,41 @@ namespace PetBoarding.Controllers
 {
     public class AdminController : Controller
     {
+
+        //---------------------
+        //  Routes and Views
+        //---------------------
+        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult ManagePets()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult ManageBookings()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult ManageContactForms()
         {
             return View();
         }
-        
+        //---------------------
+        //  CRUD
+        //---------------------
 
         // Creation logic
 
         public ActionResult AddEmployee()
-        { 
+        {
             ApplicationDbContext context = new ApplicationDbContext();
             EmployeeModel newEmployee = new EmployeeModel();
 

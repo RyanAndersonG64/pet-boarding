@@ -20,11 +20,13 @@ namespace PetBoarding.Controllers
         //  Routes and Views
         //---------------------
 
+        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult ContactUs()
         {
             ViewBag.Message = "View and submit contact forms";
@@ -48,6 +50,7 @@ namespace PetBoarding.Controllers
             return Content($"<html><head><meta http-equiv='refresh' content='5;url={redirectUrl}' /></head><body>Submission Successful!</body></html>", "text/html");
         }
 
+        [Authorize]
         public ActionResult ManagePets()
         {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
@@ -62,9 +65,16 @@ namespace PetBoarding.Controllers
 
             return View(model);
         }
+        [Authorize]
         public ActionResult UpdatePet(Guid id)
         {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
+
+            bool isOwned = dbContext.PetOwners.Any(po => po.User.UserName == User.Identity.Name && po.Pet.PetId == id);
+            if (!isOwned)
+            {
+                return HttpNotFound();
+            }
 
             UpdatePetVM model = new UpdatePetVM();
             model.Pet = dbContext.Pets.FirstOrDefault(pet => pet.PetId == id);
@@ -74,7 +84,7 @@ namespace PetBoarding.Controllers
             return View(model);
         }
 
-
+        [Authorize]
         public ActionResult ManageBookings()
         {
             return View();
@@ -173,7 +183,7 @@ namespace PetBoarding.Controllers
                 dbContext.SaveChanges();
             }
             catch (Exception ex)
-            { 
+            {
                 // Handle exceptions (e.g., log the error, show an error message, etc.)
                 // For simplicity, we will just return the error message in the view.
                 ViewBag.ErrorMessage = "An error occurred while adding the pet: " + ex.Message;
@@ -249,11 +259,17 @@ namespace PetBoarding.Controllers
         }
 
         // Read logic
+        [Authorize]
         public ActionResult ViewPet(Guid id)
         {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
             PetModel pet = dbContext.Pets.FirstOrDefault(p => p.PetId == id);
             if (pet == null)
+            {
+                return HttpNotFound();
+            }
+            bool isOwned = dbContext.PetOwners.Any(po => po.User.UserName == User.Identity.Name && po.Pet.PetId == id);
+            if (!isOwned)
             {
                 return HttpNotFound();
             }
@@ -265,11 +281,21 @@ namespace PetBoarding.Controllers
         public ActionResult UpdatePet(Guid id, PetModel pet)
         {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
+
             PetModel existingPet = dbContext.Pets.FirstOrDefault(p => p.PetId == id);
             if (existingPet == null)
             {
                 return HttpNotFound();
             }
+
+            // check that pet belongs to current user
+            bool isOwned = dbContext.PetOwners.Any(po => po.User.UserName == User.Identity.Name && po.Pet.PetId == existingPet.PetId);
+
+            if (!isOwned)
+            {
+                return HttpNotFound();
+            }
+
             existingPet.Name = pet.Name;
             existingPet.Age = pet.Age;
             existingPet.Breed = pet.Breed;
@@ -346,11 +372,17 @@ namespace PetBoarding.Controllers
             return RedirectToAction("ManageBookings");
         }
 
+        [Authorize]
         public ActionResult DeletePet(Guid id)
         {
             Models.ApplicationDbContext dbContext = new Models.ApplicationDbContext();
             PetModel pet = dbContext.Pets.FirstOrDefault(p => p.PetId == id);
             if (pet == null)
+            {
+                return HttpNotFound();
+            }
+            bool isOwned = dbContext.PetOwners.Any(po => po.User.UserName == User.Identity.Name && po.Pet.PetId == id);
+            if (!isOwned)
             {
                 return HttpNotFound();
             }

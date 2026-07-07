@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PetBoarding.Models;
+using PetBoarding.ViewModels;
 
 namespace PetBoarding.Controllers
 {
@@ -23,7 +24,7 @@ namespace PetBoarding.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Contact";
+            ViewBag.Message = "Contact Info";
 
             return View();
         }
